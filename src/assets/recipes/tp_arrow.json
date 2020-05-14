@@ -1,0 +1,22 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "  X",
+    " Y ",
+    "Z  "
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:ender_pearl"
+    },
+    "Y": {
+      "item": "minecraft:stick"
+    },
+    "Z": {
+      "item": "minecraft:feather"
+    }
+  },
+  "result": {
+    "item": "tp_arrow"
+  }
+}

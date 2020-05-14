@@ -25,8 +25,8 @@ public class ShootingStar {
     private static void shoot(EntityPlayer player, BlockPos pos, int radius, Random r, int left) {
         World world = player.getEntityWorld();
         EntityTippedArrow stars = new EntityTippedArrow(world, player);
-        stars.setPosition(pos.getX(), pos.getY() + 20, pos.getZ());
-        stars.shoot(0, -1, 0, 1, 0.5F);
+        stars.setPosition(pos.getX()+r.nextInt(radius), pos.getY() + 20, pos.getZ()+r.nextInt(radius));
+        stars.shoot(0, -1, 0, 1, 0.5f);
         world.spawnEntity(stars);
         stars.getTags().add("shooting-start");
 
@@ -36,7 +36,7 @@ public class ShootingStar {
     }
 
     public static void spawnArrows(EntityPlayer player, BlockPos pos, int radius, Random r) {
-        shoot(player, pos, radius, r, 100);
+        shoot(player, pos, radius, r, 200);
     }
 
     public static void collectUselessArrows() {

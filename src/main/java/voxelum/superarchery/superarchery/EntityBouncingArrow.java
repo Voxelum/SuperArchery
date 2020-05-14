@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BouncingArrow extends EntityTippedArrow {
+public class EntityBouncingArrow extends EntityTippedArrow {
     private int unusedCount = 0;
 
-    public BouncingArrow(World worldIn, int intensity) {
+    public EntityBouncingArrow(World worldIn, int intensity) {
         super(worldIn);
         this.unusedCount = intensity;
     }
