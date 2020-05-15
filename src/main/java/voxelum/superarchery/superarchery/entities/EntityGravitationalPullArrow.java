@@ -1,9 +1,11 @@
-package voxelum.superarchery.superarchery;
+package voxelum.superarchery.superarchery.entities;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -18,12 +20,10 @@ public class EntityGravitationalPullArrow extends EntityTippedArrow {
 
     public EntityGravitationalPullArrow(World worldIn) {
         super(worldIn);
-//        EntityGravitationalPullArrow.entityGravitationalPullArrowList.add(this);
     }
 
     public EntityGravitationalPullArrow(World worldIn, EntityLivingBase shoot) {
         super(worldIn, shoot);
-//        EntityGravitationalPullArrow.entityGravitationalPullArrowList.add(this);
     }
 
     /**
