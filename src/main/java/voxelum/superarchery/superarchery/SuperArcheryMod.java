@@ -10,6 +10,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTippedArrow;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -17,6 +19,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -143,6 +146,16 @@ public class SuperArcheryMod {
 //            if (!playerInteractEvent.getWorld().isRemote) {
 //               ShootingStar.spawnArrows(playerInteractEvent.getEntityPlayer(), playerInteractEvent.getPos(), 10, playerInteractEvent.getWorld().rand);
 //            }
+        }
+
+        @SubscribeEvent
+        public void onHurt(LivingHurtEvent event) {
+            int tbd = 1;
+            DamageSource source = event.getSource();
+            if (source instanceof EntityDamageSource && source.getDamageType().equals("explosion.explosion_arrow") && source.getTrueSource() instanceof EntityExplosionArrow) {
+                event.getEntityLiving().setFire(5);
+                event.setAmount(tbd);
+            }
         }
 
         @SubscribeEvent
