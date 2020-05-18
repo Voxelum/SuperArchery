@@ -1,46 +1,57 @@
 package voxelum.superarchery.superarchery;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.entity.projectile.EntitySpectralArrow;
-import net.minecraft.entity.projectile.EntityTippedArrow;
-import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemArrow;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-
 import java.util.Random;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityTippedArrow;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+@EventBusSubscriber
 public class ShootingStar {
-    public ShootingStar() {
-    }
-
-    //fuck
-    private static void shoot(EntityPlayer player, BlockPos pos, int radius, Random r, int left) {
-        World world = player.getEntityWorld();
-        EntityTippedArrow stars = new EntityTippedArrow(world, player);
-        stars.setPosition(pos.getX()+r.nextInt(radius), pos.getY() + 20, pos.getZ()+r.nextInt(radius));
-        stars.shoot(0, -1, 0, 1, 0.5f);
-        world.spawnEntity(stars);
-        stars.getTags().add("shooting-start");
-
-        if (left > 0) {
-            SuperArcheryMod.proxy.nextWorldTick(() -> shoot(player, pos, radius, r, left - 1));
+    @SubscribeEvent
+    public static void onArrowHit(ProjectileImpactEvent.Arrow event) {
+        if (event.getEntity().world.isRemote) {
+            return;
+        }
+        EntityArrow arrow = event.getArrow();
+        if (arrow.getTags().contains("shooting-star")) {
+            if (event.getRayTraceResult().entityHit == arrow.shootingEntity) {
+                event.setCanceled(true);
+            }
+            arrow.setDead();
         }
     }
 
-    public static void spawnArrows(EntityPlayer player, BlockPos pos, int radius, Random r) {
-        shoot(player, pos, radius, r, 200);
+    private static void shoot(EntityPlayer player, BlockPos pos, int radius, Random r) {
+        World world = player.getEntityWorld();
+        EntityTippedArrow stars = new EntityTippedArrow(world, player);
+        stars.setPosition(pos.getX() + r.nextInt(radius), pos.getY() + 20, pos.getZ() + r.nextInt(radius));
+        stars.shoot(0, -1, 0, 1, 0.5f);
+        world.spawnEntity(stars);
+        stars.getTags().add("shooting-star");
     }
 
-    public static void collectUselessArrows() {
-
+    /**
+     * Create a shooting star area.
+     * 
+     * @param player The player who create the effect
+     * @param pos    The center effect
+     * @param radius Thre rad of the effect
+     * @param r      The random of the effect
+     */
+    public static void create(EntityPlayer player, BlockPos pos, int radius, Random r) {
+        WorldTickSchedule.repeat((left, cancel) -> {
+            if (left == 0) {
+                cancel.run();
+            } else {
+                shoot(player, pos, radius, r);
+            }
+            return left - 1;
+        }, 200);
     }
 }
-
