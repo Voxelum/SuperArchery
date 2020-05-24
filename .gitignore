@@ -28,3 +28,4 @@ config
 usercache.json
 usernamecache.json
 options.txt
+classes

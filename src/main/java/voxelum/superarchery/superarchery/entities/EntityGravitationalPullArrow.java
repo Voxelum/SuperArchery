@@ -1,7 +1,5 @@
 package voxelum.superarchery.superarchery.entities;
 
-import java.util.UUID;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.item.ItemStack;
@@ -10,9 +8,11 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import voxelum.superarchery.superarchery.GravityPull;
 
+import java.util.UUID;
+
 //jian bu qi lai jian
 public class EntityGravitationalPullArrow extends EntityTippedArrow {
-    private int age = 5 * 20; // live for about 5 sec
+    private int age = 50 * 20; // live for about 5 sec
     private double radius = 30D;
     private UUID shooterUUID;
 
@@ -22,7 +22,7 @@ public class EntityGravitationalPullArrow extends EntityTippedArrow {
 
     public EntityGravitationalPullArrow(World worldIn, EntityLivingBase shoot, ItemStack item) {
         super(worldIn, shoot);
-        this.age = 5 * 20;
+        this.age = 50 * 20;
         this.shooterUUID = shoot.getUniqueID();
     }
 

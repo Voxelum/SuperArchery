@@ -1,19 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ABX",
+    "XA ",
     " Y ",
     " Z "
   ],
   "key": {
-    "B": {
-      "item": "minecraft:flint"
-    },
     "X": {
-      "item": "minecraft:magma_cream"
+      "item": "minecraft:slime_ball"
     },
     "A": {
-      "item": "minecraft:water_bucket"
+      "item": "minecraft:flint"
     },
     "Y": {
       "item": "minecraft:stick"

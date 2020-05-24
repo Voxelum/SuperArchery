@@ -1,11 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "  X",
+    " AX",
     " Y ",
-    "Z  "
+    " Z "
   ],
   "key": {
+    "A": {
+      "item": "minecraft:flint"
+    },
     "X": {
       "item": "minecraft:ender_pearl"
     },
