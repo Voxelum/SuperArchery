@@ -82,8 +82,17 @@ processResources {
     }
 }
 
-// build {
-//     exec {
-//         commandLine '7z.exe', 'a', ''
-//     }
-// }
+build {
+    doLast {
+        def f = file('.')
+        println 'start'
+        def jar = project.archivesBaseName + '-' + project.version + '.jar'
+        def buildFilePath = './build/libs/' + jar
+        def destFilePath = './build/libs/' + project.archivesBaseName + '-' + project.version + '.7z'
+        exec {
+            workingDir '.'
+            commandLine './7z.exe', 'a', destFilePath, buildFilePath
+            commandLine './7z.exe', 'rn', destFilePath, jar, 'SuperArchery/' + jar
+        }
+    }
+}
